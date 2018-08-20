@@ -40,7 +40,7 @@ func main() {
 	msg := message{name, "I have entered the chatroom!", now()}
 	say(msg)
 
-	for true {
+	for {
 		msgContent, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println(err)
@@ -48,21 +48,36 @@ func main() {
 		}
 		msg = message{name, strings.TrimSuffix(msgContent, "\n"), now()}
 		if msg.Content == "exit" {
+			finalMessageContent := name + " has left the chatroom, " + "👋 See you later, alligator~"
+			finalMessage := message{"ChoiBot", finalMessageContent, now()}
+			say(finalMessage)
 			break
 		}
-		commands := []rune{}
+		commands := []string{}
 		if strings.Contains(msg.Content, "$reverse") {
 			msg.Content = strings.Replace(msg.Content, "$reverse", "", -1)
-			commands = append(commands, 'r')
+			commands = append(commands, "$reverse")
 		}
 		if strings.Contains(msg.Content, "$uppercase") {
 			msg.Content = strings.Replace(msg.Content, "$uppercase", "", -1)
-			commands = append(commands, 'u')
+			commands = append(commands, "$uppercase")
 		}
+
+		// handle emojis
+		if strings.Contains(msg.Content, "=)") {
+			msg.Content = strings.Replace(msg.Content, "=)", "😀", -1)
+		}
+		if strings.Contains(msg.Content, "<3") {
+			msg.Content = strings.Replace(msg.Content, "<3", "❤️ ", -1)
+		}
+		if strings.Contains(msg.Content, "</3") {
+			msg.Content = strings.Replace(msg.Content, "</3", "💔 ", -1)
+		}
+
 		for _, command := range commands {
-			if command == 'r' {
+			if command == "$reverse" {
 				msg.Content = reverse(msg.Content)
-			} else if command == 'u' {
+			} else if command == "$uppercase" {
 				msg.Content = strings.ToUpper(msg.Content)
 			}
 		}
