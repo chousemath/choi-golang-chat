@@ -21,7 +21,6 @@ func say(msg message) {
 	fmt.Printf("\n\t[%s]\n\t$%s: %s\n\n", msg.Timestamp, msg.Name, msg.Content)
 }
 func reverse(msgContent string) string {
-	msgContent = strings.TrimSuffix(strings.Replace(msgContent, "$reverse", "", -1), " ")
 	runes := []rune(msgContent)
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
 		runes[i], runes[j] = runes[j], runes[i]
@@ -50,9 +49,25 @@ func main() {
 		msg = message{name, strings.TrimSuffix(msgContent, "\n"), now()}
 		if msg.Content == "exit" {
 			break
-		} else if strings.Contains(msg.Content, "$reverse") {
-			msg.Content = reverse(msg.Content)
 		}
+		commands := []rune{}
+		if strings.Contains(msg.Content, "$reverse") {
+			msg.Content = strings.Replace(msg.Content, "$reverse", "", -1)
+			commands = append(commands, 'r')
+		}
+		if strings.Contains(msg.Content, "$uppercase") {
+			msg.Content = strings.Replace(msg.Content, "$uppercase", "", -1)
+			commands = append(commands, 'u')
+		}
+		for _, command := range commands {
+			if command == 'r' {
+				msg.Content = reverse(msg.Content)
+			} else if command == 'u' {
+				msg.Content = strings.ToUpper(msg.Content)
+			}
+		}
+		// finally remove extra spaces at the beginning and the end of the string
+		msg.Content = strings.TrimSpace(msg.Content)
 		say(msg)
 	}
 }
