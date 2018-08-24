@@ -14,6 +14,11 @@ type message struct {
 	Timestamp string
 }
 
+type emoji struct {
+	Code    string
+	Graphic string
+}
+
 func now() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
@@ -29,6 +34,24 @@ func reverse(msgContent string) string {
 }
 
 func main() {
+	emojis := []emoji{
+		emoji{
+			Code:    "=)",
+			Graphic: "😀",
+		},
+		emoji{
+			Code:    "<3",
+			Graphic: "❤️ ",
+		},
+		emoji{
+			Code:    "</3",
+			Graphic: "💔 ",
+		},
+		emoji{
+			Code:    "8)",
+			Graphic: "😎",
+		},
+	}
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("What is your name?: ")
 	name, err := reader.ReadString('\n')
@@ -63,15 +86,10 @@ func main() {
 			commands = append(commands, "$uppercase")
 		}
 
-		// handle emojis
-		if strings.Contains(msg.Content, "=)") {
-			msg.Content = strings.Replace(msg.Content, "=)", "😀", -1)
-		}
-		if strings.Contains(msg.Content, "<3") {
-			msg.Content = strings.Replace(msg.Content, "<3", "❤️ ", -1)
-		}
-		if strings.Contains(msg.Content, "</3") {
-			msg.Content = strings.Replace(msg.Content, "</3", "💔 ", -1)
+		for _, emoj := range emojis {
+			if strings.Contains(msg.Content, emoj.Code) {
+				msg.Content = strings.Replace(msg.Content, emoj.Code, emoj.Graphic, -1)
+			}
 		}
 
 		for _, command := range commands {
