@@ -76,6 +76,22 @@ func main() {
 			Graphic: "😠",
 		},
 		emoji{
+			Code:    ":)",
+			Graphic: "🙂",
+		},
+		emoji{
+			Code:    ":(",
+			Graphic: "😞",
+		},
+		emoji{
+			Code:    ":/",
+			Graphic: "😕",
+		},
+		emoji{
+			Code:    ":P",
+			Graphic: "😛",
+		},
+		emoji{
 			Code:    "<3",
 			Graphic: "❤️ ",
 		},
