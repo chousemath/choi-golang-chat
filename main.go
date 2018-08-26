@@ -51,6 +51,18 @@ func main() {
 			Code:    "8)",
 			Graphic: "😎",
 		},
+		emoji{
+			Code:    "D:",
+			Graphic: "😧",
+		},
+		emoji{
+			Code:    ":|",
+			Graphic: "😐",
+		},
+		emoji{
+			Code:    ":o)",
+			Graphic: "🐵",
+		},
 	}
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("What is your name?: ")
