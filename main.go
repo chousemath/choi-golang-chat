@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -31,6 +32,23 @@ func reverse(msgContent string) string {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
 	return string(runes)
+}
+func add(msgContent string) string {
+	words := strings.Fields(msgContent)
+	var fullExp string
+	var calculated string
+	for i, word := range words {
+		if word == ".+" {
+			fullExp = words[i-1] + " .+ " + words[i+1]
+			if n1, err1 := strconv.ParseFloat(words[i-1], 32); err1 == nil {
+				if n2, err2 := strconv.ParseFloat(words[i+1], 32); err2 == nil {
+					calculated = fmt.Sprintf("%f", n1+n2)
+					break
+				}
+			}
+		}
+	}
+	return strings.Replace(msgContent, fullExp, calculated, -1)
 }
 
 func main() {
@@ -116,6 +134,9 @@ func main() {
 		if strings.Contains(msg.Content, "$uppercase") {
 			msg.Content = strings.Replace(msg.Content, "$uppercase", "", -1)
 			commands = append(commands, "$uppercase")
+		}
+		if strings.Contains(msg.Content, ".+") {
+			msg.Content = add(msg.Content)
 		}
 
 		for _, emoj := range emojis {
