@@ -17,3 +17,20 @@ $ go run main.go
 * In-application weather and financial reports
 * Support for inline mathematics
 * Add unit tests
+
+# Notes on Golang syntax
+
+```bash
+# Every Go program must start with a package declaration
+# Executables are kinds of programs that can run directly from terminal
+# Libraries are collections of code we package together to use in other programs
+# import keyword is how we include code from other packages
+# main is special because it's called when you execute the program
+```
+
+# Notes on Golang tooling
+
+```bash
+# go run takes files, compiles into executable in temp dir, and runs program
+$ go run main.go
+```

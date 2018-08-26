@@ -40,6 +40,26 @@ func main() {
 			Graphic: "😀",
 		},
 		emoji{
+			Code:    ":D",
+			Graphic: "😄",
+		},
+		emoji{
+			Code:    ";)",
+			Graphic: "😉",
+		},
+		emoji{
+			Code:    ":>",
+			Graphic: "😆",
+		},
+		emoji{
+			Code:    ":o",
+			Graphic: "😮",
+		},
+		emoji{
+			Code:    ">:(",
+			Graphic: "😠",
+		},
+		emoji{
 			Code:    "<3",
 			Graphic: "❤️ ",
 		},
