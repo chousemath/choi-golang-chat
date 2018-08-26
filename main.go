@@ -48,6 +48,21 @@ func add(msgContent string) string {
 	}
 	return msgContent
 }
+func subtract(msgContent string) string {
+	words := strings.Fields(msgContent)
+	for i, word := range words {
+		if word == ".-" {
+			if left, err1 := strconv.ParseFloat(words[i-1], 32); err1 == nil {
+				if right, err2 := strconv.ParseFloat(words[i+1], 32); err2 == nil {
+					return strings.Replace(msgContent, words[i-1]+" .- "+words[i+1], fmt.Sprintf("%f", left-right), -1)
+				}
+				return msgContent
+			}
+			return msgContent
+		}
+	}
+	return msgContent
+}
 
 func main() {
 	emojis := []emoji{
@@ -92,12 +107,20 @@ func main() {
 			Graphic: "😛",
 		},
 		emoji{
+			Code:    ";P",
+			Graphic: "😜",
+		},
+		emoji{
 			Code:    "<3",
 			Graphic: "❤️ ",
 		},
 		emoji{
 			Code:    "</3",
 			Graphic: "💔 ",
+		},
+		emoji{
+			Code:    ":*",
+			Graphic: "💋 ",
 		},
 		emoji{
 			Code:    "8)",
@@ -151,6 +174,9 @@ func main() {
 		}
 		if strings.Contains(msg.Content, ".+") {
 			msg.Content = add(msg.Content)
+		}
+		if strings.Contains(msg.Content, ".-") {
+			msg.Content = subtract(msg.Content)
 		}
 
 		for _, emoj := range emojis {
