@@ -26,6 +26,7 @@ $ go run main.go
 # Libraries are collections of code we package together to use in other programs
 # import keyword is how we include code from other packages
 # main is special because it's called when you execute the program
+# Characters are represented by a byte (remember a byte is an integer)
 ```
 
 # Notes on Golang tooling

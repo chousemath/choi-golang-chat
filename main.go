@@ -35,20 +35,18 @@ func reverse(msgContent string) string {
 }
 func add(msgContent string) string {
 	words := strings.Fields(msgContent)
-	var fullExp string
-	var calculated string
 	for i, word := range words {
 		if word == ".+" {
-			fullExp = words[i-1] + " .+ " + words[i+1]
-			if n1, err1 := strconv.ParseFloat(words[i-1], 32); err1 == nil {
-				if n2, err2 := strconv.ParseFloat(words[i+1], 32); err2 == nil {
-					calculated = fmt.Sprintf("%f", n1+n2)
-					break
+			if left, err1 := strconv.ParseFloat(words[i-1], 32); err1 == nil {
+				if right, err2 := strconv.ParseFloat(words[i+1], 32); err2 == nil {
+					return strings.Replace(msgContent, words[i-1]+" .+ "+words[i+1], fmt.Sprintf("%f", left+right), -1)
 				}
+				return msgContent
 			}
+			return msgContent
 		}
 	}
-	return strings.Replace(msgContent, fullExp, calculated, -1)
+	return msgContent
 }
 
 func main() {
